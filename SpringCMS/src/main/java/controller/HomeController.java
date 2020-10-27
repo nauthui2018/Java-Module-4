@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import service.CustomerService;
 import service.CustomerServiceFactory;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -23,7 +22,7 @@ public class HomeController {
     }
 
     @GetMapping("/info")
-    public String showInfo(Model model, @RequestParam("id") long id) {
+    public String showInfo(Model model, @RequestParam long id) {
         Customer customer = customerService.findOne(id);
         model.addAttribute("customer", customer);
         return "info";
