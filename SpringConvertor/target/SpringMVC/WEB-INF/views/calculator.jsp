@@ -1,0 +1,31 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: NguyenVanHuong
+  Date: 10/23/20
+  Time: 9:17 AM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Calculator</title>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <form action="/calculator" method="post">
+        <input type="text" name="num1">
+        <input type="text" name="num2">
+        <br><br>
+        <input name="operator" id="add" type="submit" value="Addition(+)">
+        <input name="operator" type="submit" value="Subtract(-)">
+        <input name="operator" type="submit" value="Multiplication(X)">
+        <input name="operator" type="submit" value="Division(/)">
+        <br>
+        <p>Result: ${requestScope["result"]}</p>
+    </form>
+</body>
+</html>
