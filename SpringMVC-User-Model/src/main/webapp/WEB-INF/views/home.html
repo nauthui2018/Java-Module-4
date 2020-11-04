@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h3>Home</h3>
+<div id="form">
+<form th:action="@{/login}" th:object="${login}"
+    method="POST" novalidate="novalidate">
+    <fieldset>
+        <legend>Login</legend>
+        <table>
+            <tr>
+                <td><label>Account:</label></td>
+                <td><input type="text" th:field="*{account}"/></td>
+            </tr>
+            <tr>
+                <td><label>Password:</label></td>
+                <td><input type="password" th:field="*{password}"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Login"/></td>
+
+            </tr>
+        </table>
+    </fieldset>
+</form>
+</div>
+</body>
+</html>
