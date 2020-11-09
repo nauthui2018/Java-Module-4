@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<h3>Upload Result</h3>
+<div th:replace="/layout :: menu"></div>
+<div>
+    <label>Description:</label>
+    <input type="text" th:field="*{description}"/>
+</div>
+<div th:each="file : ${uploadedFiles}">
+    <p th:text="${file}"></p>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
