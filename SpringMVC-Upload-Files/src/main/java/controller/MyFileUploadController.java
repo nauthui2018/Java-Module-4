@@ -7,7 +7,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
@@ -45,7 +44,7 @@ public class MyFileUploadController {
 
     // POST: Xử lý Upload
     @PostMapping("/uploadOneFile")
-    public String uploadOneFileHandlerPOST(HttpServletRequest request, Model model, @RequestParam("description") String description, MyUploadForm myUploadForm) {
+    public String uploadOneFileHandlerPOST(HttpServletRequest request, Model model, MyUploadForm myUploadForm) {
         return this.doUpload(request, model, myUploadForm);
     }
 
@@ -56,34 +55,33 @@ public class MyFileUploadController {
     }
 
     private String doUpload(HttpServletRequest request, Model model, MyUploadForm myUploadForm) {
-        String description = myUploadForm.getDescription();
+        String name = myUploadForm.getName();
         String uploadRootPath = request.getServletContext().getRealPath("upload");
         System.out.println("uploadRootPath=" + uploadRootPath);
         File uploadRootDir = new File(uploadRootPath);
         if (!uploadRootDir.exists()) {
             uploadRootDir.mkdirs();
         }
-        CommonsMultipartFile[] fileDatas = myUploadForm.getFileDatas();
+        CommonsMultipartFile[] files = myUploadForm.getFiles();
         Map<File, String> uploadedFiles = new HashMap();
-        for (CommonsMultipartFile fileData : fileDatas) {
-            String name = fileData.getOriginalFilename();
-            System.out.println("Client File Name = " + name);
+        for (CommonsMultipartFile file : files) {
+            String fileName = file.getOriginalFilename();
             if (name != null && name.length() > 0) {
                 try {
                     // Tạo file tại Server.
-                    File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + name);
+                    File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + fileName);
                     // Luồng ghi dữ liệu vào file trên Server.
                     BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                    stream.write(fileData.getBytes());
+                    stream.write(file.getBytes());
                     stream.close();
-                    uploadedFiles.put(serverFile, name);
+                    uploadedFiles.put(serverFile, fileName);
                     System.out.println("Write file: " + serverFile);
                 } catch (Exception e) {
                     System.out.println("Error Write file: " + name);
                 }
             }
         }
-        model.addAttribute("description", description);
+        model.addAttribute("name", name);
         model.addAttribute("uploadedFiles", uploadedFiles);
         return "uploadResult";
     }

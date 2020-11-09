@@ -5,16 +5,15 @@
 <h3>Upload One File</h3>
 <div th:replace="/layout :: menu"></div>
 <div id="form">
-    <!--/*@thymesVar id="myUploadForm" type=""*/-->
     <form action="#" th:action="@{/uploadOneFile}" th:object="${myUploadForm}"
           method="POST" enctype="multipart/form-data">
         <div>
             <label>Description:</label>
-            <input type="text" th:field="*{description}"/>
+            <input type="text" th:field="*{name}"/>
         </div>
         <div>
             <label>File to upload: </label>
-            <input type="file" th:field="*{fileDatas}"/>
+            <input type="file" th:field="*{files}"/>
         </div>
         <input type="submit" value="Upload"/>
     </form>

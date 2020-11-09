@@ -3,27 +3,26 @@ package form;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class MyUploadForm {
-    private String description;
+    private String name;
     // Upload files.
-    private CommonsMultipartFile[] fileDatas;
+    private CommonsMultipartFile[] files;
 
     public MyUploadForm() {
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public CommonsMultipartFile[] getFiles() {
+        return files;
     }
 
-    public CommonsMultipartFile[] getFileDatas() {
-        return fileDatas;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setFileDatas(CommonsMultipartFile[] fileDatas) {
-        this.fileDatas = fileDatas;
+    public void setFiles(CommonsMultipartFile[] files) {
+        this.files = files;
     }
-
 }
