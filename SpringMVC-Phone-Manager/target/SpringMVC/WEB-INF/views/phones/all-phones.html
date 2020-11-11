@@ -13,13 +13,13 @@
 
 </head>
 <body>
-<div id="container">
+<div class="container" id="container">
     <h1>All Smartphones</h1>
     <a th:href="@{/smartphones/create}">Create</a>
     <div>
         <p>Here you can see a list of Smartphones:</p>
     </div>
-    <table class="myDataTable" border="1px" cellpadding="0" cellspacing="0">
+    <table id="dataTable" class="table" border="1px" cellpadding="0" cellspacing="0">
         <thead>
         <tr>
             <th>Producer</th>
@@ -32,13 +32,43 @@
 
         </tbody>
     </table>
+    <form id="newSmartphoneForm">
+    <table>
+        <input type="hidden" id="id" >
+        <tbody>
+        <tr>
+            <td>Producer:</td>
+            <td>
+                <select id="producer">
+                    <option value="NOKIA">Nokia</option>
+                    <option selected="selected" value="IPHONE">iPhone</option>
+                    <option value="HTC">HTC</option>
+                    <option value="SAMSUNG">Samsung</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Model:</td>
+            <td><input id="model" /></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input id="price" /></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Create" onclick=" return phones.save()"/></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
     <a th:href="@{/}">Home page</a>
 </div>
 
-<!--&lt;!&ndash; Datatable JS&ndash;&gt;-->
-<!--<script src="https://code.jquery.com/jquery-3.5.1.js"></script>-->
-<!--<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>-->
-<!--<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>-->
+<!-- Datatable JS-->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 
 <script type="text/javascript">
     var phones = phones || {};
@@ -48,26 +78,96 @@
             method: "GET",
             dataType: "json",
             success: function (data) {
+                $('#sPhoneFromResponse').empty();
                 $.each(data, function (i, v) {
                     $('#sPhoneFromResponse').append(
                         "<tr>" +
-                        "<td>" + v.producer + "</td>" +
-                        "<td>" + v.model + "</td>" +
-                        "<td>" + v.price + "</td>" +
-                        "<td>" +
-                        "<a href='/smartphones/edit/" + v.id + "'>Edit</a><br/>" +
-                        "<a href='/smartphones/delete/" + v.id + "'>Delete</a><br/>" +
-                        "</td>" +
+                            "<td>" + v.producer + "</td>" +
+                            "<td>" + v.model + "</td>" +
+                            "<td>" + v.price + "</td>" +
+                            "<td>" +
+                                "<a class='ml-3' href='#' onclick='phones.update("+v.id+")'>Edit</a>" +
+                                "<a class='ml-3' href='#' onclick='phones.remove("+v.id+")'>Delete</a>" +
+                            "</td>" +
                         "</tr>"
                     );
                 });
+                $('#dataTable').DataTable();
             }
         });
     };
 
+    phones.remove = function(id){
+
+                    $.ajax({
+                        url : "http://localhost:8080/api/smartphones/" + id,
+                        method : "DELETE", //"POST"
+                        dataType:'json',
+                        success : function(data){
+                            phones.showAllPhones();
+                            alert("Product has been deleted successfully");
+                        }
+                    });
+
+    }
+
     $(document).ready(function(){
         phones.showAllPhones();
     });
+    phones.create = function () {
+        var phone={};
+        phone.model=$('#model').val();
+        phone.producer=$('#producer').val();
+        phone.price=$('#price').val();
+        $.ajax({
+            url : "http://localhost:8080/api/smartphones/",
+            method : "POST", //"POST"
+            dataType:'json',
+            contentType:"application/json",
+            data : JSON.stringify(phone),
+            success : function(data){
+                alert("Product has been Created successfully");
+                // phones.showAllPhones();
+
+            }
+        })
+       return false;
+    }
+
+    phones.update = function (id) {
+        $.ajax({
+            url : "http://localhost:8080/api/smartphones/" + id,
+            method : "GET", //"POST"
+            dataType:'json',
+            success : function(data){
+                $('#producer').val(data.producer);
+                $('#model').val(data.model);
+                $('#price').val(data.price);
+                $('#id').val(data.id);
+            }
+        });
+    }
+
+    phones.save = function () {
+        var phone={};
+        phone.model=$('#model').val();
+        phone.producer=$('#producer').val();
+        phone.price=$('#price').val();
+        phone.id=$('#id').val();
+        $.ajax({
+            url : "http://localhost:8080/api/smartphones/",
+            method : "PUT", //"POST"
+            dataType:'json',
+            contentType:"application/json",
+            data : JSON.stringify(phone),
+            success : function(data){
+                alert("ok");
+                phones.showAllPhones();
+            }
+        });
+        return false;
+    }
+
 
 </script>
 </body>

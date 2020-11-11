@@ -46,17 +46,17 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#newSmartphoneForm').submit(function(event) {
-            var producer = $('#producer').val();
-            var model = $('#model').val();
-            var price = $('#price').val();
-            var json = { "producer" : producer, "model" : model, "price": price};
+            var newPhone = {};
+            newPhone.producer = $('#producer').val();
+            newPhone.model = $('#model').val();
+            newPhone.price = $('#price').val();
             $.ajax({
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 type : "POST",
-                data: JSON.stringify(json),
+                data: JSON.stringify(newPhone),
                 url: "/smartphones/createnewPhone",
                 success: function(smartphone) {
                     var respContent = "";

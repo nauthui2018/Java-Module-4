@@ -6,10 +6,11 @@
 <div th:replace="/layout :: menu"></div>
 <div>
     <label>Description:</label>
-    <input type="text" th:field="*{description}"/>
 </div>
+<!--/*@thymesVar id="uploadedFiles" type=""*/-->
 <div th:each="file : ${uploadedFiles}">
-    <p th:text="${file}"></p>
+    <!--/*@thymesVar id="getOriginalFilename" type=""*/-->
+    <p th:text="${file.getOriginalFilename()}"></p>
 </div>
 <footer th:replace="/layout :: footer"></footer>
 </body>
