@@ -56,7 +56,7 @@ public class MyFileUploadController {
 
     private String doUpload(HttpServletRequest request, Model model, MyUploadForm myUploadForm) {
         String name = myUploadForm.getName();
-        String uploadRootPath = request.getServletContext().getRealPath("upload");
+        String uploadRootPath = request.getServletContext().getRealPath("upload"); //loi o dayyyyyy
         System.out.println("uploadRootPath=" + uploadRootPath);
         File uploadRootDir = new File(uploadRootPath);
         if (!uploadRootDir.exists()) {
