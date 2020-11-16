@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<h3>View Employee</h3>
+<div id="detail">
+    <div>
+        <label>ID:</label>
+        <label th:text="${employee.getId()}"></label>
+    </div>
+    <div>
+        <label>Name:</label>
+        <label th:text="${employee.getName()}"></label>
+    </div>
+    <div>
+        <label>Phone:</label>
+        <label th:text="${employee.getPhone()}"></label>
+    </div>
+</div>
+<footer></footer>
+</body>
+</html>
