@@ -10,7 +10,7 @@
 <!--/*@thymesVar id="uploadedFiles" type=""*/-->
 <div th:each="file : ${uploadedFiles}">
     <!--/*@thymesVar id="getOriginalFilename" type=""*/-->
-    <p th:text="${file.getOriginalFilename()}"></p>
+    <p th:text="${file}"></p>
 </div>
 <footer th:replace="/layout :: footer"></footer>
 </body>

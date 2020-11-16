@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h3>Current Setting</h3>
+<a href="/setting">Update Setting</a>
+    <table>
+        <tr>
+            <td>Languages:</td>
+            <td th:text="${setting.getLanguage()}"></td>
+        </tr>
+        <tr>
+            <td>Page Size:</td>
+            <td th:text="'Show ' + ${setting.getPageSize()} + ' emails per page'">
+            </td>
+        </tr>
+        <tr>
+            <td>Spams filter:</td>
+            <td th:text="${setting.viewSpamsFilter(setting.getSpamsFilter())}"></td>
+        </tr>
+        <tr>
+            <td>Signature:</td>
+            <td>
+                <textarea type="text" th:text="${setting.getSignature()}" disabled></textarea>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

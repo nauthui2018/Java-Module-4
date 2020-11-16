@@ -73,7 +73,12 @@
 <script type="text/javascript">
     var phones = phones || {};
     phones.showAllPhones = function() {
+        var dataTable = $('#dataTable').DataTable();
+        dataTable.clear();
+        dataTable.draw();
+        dataTable.destroy();
         $.ajax({
+
             url: "http://localhost:8080/api/smartphones/",
             method: "GET",
             dataType: "json",
@@ -92,7 +97,9 @@
                         "</tr>"
                     );
                 });
-                $('#dataTable').DataTable();
+                $('#dataTable').DataTable({
+                    "lengthMenu": [3, 5, 10, 20, 100]
+                });
             }
         });
     };
@@ -162,6 +169,11 @@
             data : JSON.stringify(phone),
             success : function(data){
                 alert("ok");
+                var table = $('#dataTable').DataTable();
+
+                table
+                    .clear()
+                    .draw();
                 phones.showAllPhones();
             }
         });
