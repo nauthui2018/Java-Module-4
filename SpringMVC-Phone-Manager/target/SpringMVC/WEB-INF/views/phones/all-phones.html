@@ -78,7 +78,6 @@
         dataTable.draw();
         dataTable.destroy();
         $.ajax({
-
             url: "http://localhost:8080/api/smartphones/",
             method: "GET",
             dataType: "json",
@@ -86,15 +85,15 @@
                 $('#sPhoneFromResponse').empty();
                 $.each(data, function (i, v) {
                     $('#sPhoneFromResponse').append(
-                        "<tr>" +
-                            "<td>" + v.producer + "</td>" +
-                            "<td>" + v.model + "</td>" +
-                            "<td>" + v.price + "</td>" +
-                            "<td>" +
-                                "<a class='ml-3' href='#' onclick='phones.update("+v.id+")'>Edit</a>" +
-                                "<a class='ml-3' href='#' onclick='phones.remove("+v.id+")'>Delete</a>" +
-                            "</td>" +
-                        "</tr>"
+                        `<tr>
+                            <td>${v.producer}</td>
+                            <td>${v.model}</td>
+                            <td>${v.price}</td>
+                            <td>
+                                <a class='ml-3' href='#' onclick='phones.update(${v.id})'>Edit</a>
+                                <a class='ml-3' href='#' onclick='phones.remove(${v.id})'>Delete</a>
+                            </td>
+                        </tr>`
                     );
                 });
                 $('#dataTable').DataTable({
