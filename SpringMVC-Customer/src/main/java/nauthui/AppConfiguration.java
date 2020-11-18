@@ -1,5 +1,7 @@
 package nauthui;
 
+import nauthui.repository.CustomerRepository;
+import nauthui.repository.CustomerRepositoryImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -33,45 +35,49 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan("nauthui.controller")
+@ComponentScan("nauthui")
 public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
-
-    @Bean
-    public CustomerService customerService() {
-        return new CustomerServiceImpl();
-    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
+    @Bean
+    public CustomerRepository customerRepository(){
+        return new CustomerRepositoryImpl();
+    }
+
+    @Bean
+    public CustomerService customerService(){
+        return new CustomerServiceImpl();
+    }
+
+
     //Thymeleaf Configuration
     @Bean
-    public SpringResourceTemplateResolver templateResolver() {
+    public SpringResourceTemplateResolver templateResolver(){
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/views");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
-        templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
 
     @Bean
-    public TemplateEngine templateEngine() {
+    public TemplateEngine templateEngine(){
         TemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         return templateEngine;
     }
 
     @Bean
-    public ThymeleafViewResolver viewResolver() {
+    public ThymeleafViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine((ISpringTemplateEngine) templateEngine());
-        viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
 
@@ -86,7 +92,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[]{"nauthui.model"});
+        em.setPackagesToScan(new String[]{"com.codegym.cms.model"});
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -100,7 +106,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/cms");
         dataSource.setUsername( "root" );
-        dataSource.setPassword( "samthui7" );
+        dataSource.setPassword( "123456" );
         return dataSource;
     }
 

@@ -1,37 +1,34 @@
 package nauthui.service;
 
 import nauthui.model.Customer;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import nauthui.repository.CustomerRepository;
+import nauthui.repository.CustomerRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import java.util.*;
-
-import static java.util.Arrays.asList;
+import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
     @Override
     public List<Customer> findAll() {
-        return null;
+        return customerRepository.findAll();
     }
 
     @Override
     public Customer findById(Long id) {
-        return null;
+        return customerRepository.findById(id);
     }
 
     @Override
     public void save(Customer customer) {
-
+        customerRepository.save(customer);
     }
 
     @Override
     public void remove(Long id) {
-
+        customerRepository.remove(id);
     }
 }

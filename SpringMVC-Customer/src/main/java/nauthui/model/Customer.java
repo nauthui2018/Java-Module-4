@@ -3,7 +3,7 @@ package nauthui.model;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "customers")
 public class Customer {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
